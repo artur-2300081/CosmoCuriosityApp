@@ -8,10 +8,13 @@
 import SwiftUI
 
 @main
-struct CosmoCuriosityAppApp: App {
+struct CosmoCuriosityApp: App {
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ZStack {
+                MainTabView()
+            }
         }
     }
 }
