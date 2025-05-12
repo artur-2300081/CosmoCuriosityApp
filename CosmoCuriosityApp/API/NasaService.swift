@@ -63,6 +63,29 @@ extension NasaService {
     }
 }
 
+// MARK: - fetchEPICImages
+extension NasaService {
+    func fetchEPICImages(completion: @escaping ([EPICImage]) -> Void) {
+        let urlString = "https://api.nasa.gov/EPIC/api/natural?api_key=\(apiKey)"
+
+        guard let url = URL(string: urlString) else {
+            completion([])
+            return
+        }
+
+        URLSession.shared.dataTask(with: url) { data, _, _ in
+            guard let data = data,
+                  let images = try? JSONDecoder().decode([EPICImage].self, from: data) else {
+                DispatchQueue.main.async { completion([]) }
+                return
+            }
+            DispatchQueue.main.async {
+                completion(images)
+            }
+        }.resume()
+    }
+}
+
 // MARK: - searchImages
 extension NasaService {
     func searchImages(query: String, page: Int = 1, completion: @escaping ([NasaImage]) -> Void) {
@@ -98,29 +121,6 @@ extension NasaService {
 
             DispatchQueue.main.async {
                 completion(items)
-            }
-        }.resume()
-    }
-}
-
-// MARK: - fetchEPICImages
-extension NasaService {
-    func fetchEPICImages(completion: @escaping ([EPICImage]) -> Void) {
-        let urlString = "https://api.nasa.gov/EPIC/api/natural?api_key=\(apiKey)"
-
-        guard let url = URL(string: urlString) else {
-            completion([])
-            return
-        }
-
-        URLSession.shared.dataTask(with: url) { data, _, _ in
-            guard let data = data,
-                  let images = try? JSONDecoder().decode([EPICImage].self, from: data) else {
-                DispatchQueue.main.async { completion([]) }
-                return
-            }
-            DispatchQueue.main.async {
-                completion(images)
             }
         }.resume()
     }

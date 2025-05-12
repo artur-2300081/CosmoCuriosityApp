@@ -7,12 +7,21 @@
 
 import Foundation
 
+/// Represents an EPIC (Earth Polychromatic Imaging Camera) image.
+///
+/// Includes the image identifier, caption, date, and associated URL.
 struct EPICImage: Decodable, Identifiable, Equatable, Encodable {
+    /// Unique identifier.
     let identifier: String
+    var id: String { identifier }
+    
+    /// Caption describing the image.
     let caption: String
     let image: String
+    
+    /// Date of the image capture.
     let date: String
-    var id: String { identifier }
+    
     var formattedDateComponents: (year: String, month: String, day: String) {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -26,6 +35,8 @@ struct EPICImage: Decodable, Identifiable, Equatable, Encodable {
         }
         return ("0000", "00", "00")
     }
+    
+    /// URL to access the image.
     var imageURL: String {
         let (y, m, d) = formattedDateComponents
         return "https://epic.gsfc.nasa.gov/archive/natural/\(y)/\(m)/\(d)/png/\(image).png"
