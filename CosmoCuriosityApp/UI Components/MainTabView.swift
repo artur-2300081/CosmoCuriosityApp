@@ -10,7 +10,7 @@ import SwiftUI
 struct MainTabView: View {
     var body: some View {
         TabView {
-            APODView()
+            APODView(viewModel: APODViewModel(service: NasaService()))
             .tabItem {
                 Label(String(localized: "tab_home"), systemImage: "house")
             }
