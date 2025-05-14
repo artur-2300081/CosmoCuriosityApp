@@ -14,7 +14,7 @@ struct MainTabView: View {
             .tabItem {
                 Label(String(localized: "tab_home"), systemImage: "house")
             }
-            MarsPhotosView()
+            MarsPhotosView(viewModel: MarsPhotosViewModel(service: NasaService()))
             .tabItem {
                 Label(String(localized: "tab_mars"), systemImage: "circle.fill")
             }

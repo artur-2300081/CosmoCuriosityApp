@@ -8,15 +8,66 @@
 import SwiftUI
 
 struct MarsPhotosView: View {
+    @StateObject private var viewModel: MarsPhotosViewModel
+    @State private var selectedDate = Date()
+    
+    init(viewModel: MarsPhotosViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
+    
     var body: some View {
         NavigationView {
-            ScrollView {
-                LazyVStack(spacing: 16) {
-                    
+            VStack {
+                DatePicker("Select Earth Date", selection: $selectedDate, displayedComponents: .date)
+                    .padding()
+                    .onChange(of: selectedDate) { _, newDate in
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "yyyy-MM-dd"
+                        viewModel.loadPhotos(for: formatter.string(from: newDate))
+                    }
+
+                if viewModel.photos.isEmpty {
+                    Text("No photos found for this date.")
+                        .foregroundColor(.gray)
+                        .padding()
+                } else {
+                    ScrollView {
+                        LazyVStack(spacing: 16) {
+                            ForEach(viewModel.photos) { photo in
+                                VStack(alignment: .leading, spacing: 12) {
+                                    NavigationLink(destination: MarsPhotoDetailView(photo: photo)) {
+                                        VStack(alignment: .leading, spacing: 8) {
+                                            // add image view
+
+                                            Text("Camera: \(photo.camera.fullName)")
+                                                .font(.subheadline)
+                                                .foregroundColor(.secondary)
+                                        }
+                                    }
+                                    .buttonStyle(PlainButtonStyle())
+
+                                    // add actions buttons
+                                    
+                                    Divider()
+                                }
+                            }
+                        }
+                        .padding()
+                        .background(Color(.systemBackground))
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                        .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
+                        .padding(.horizontal)
+                    }
                 }
-                .padding(.top)
             }
             .navigationTitle("Mars Rover")
+            .onAppear {
+                if viewModel.photos.isEmpty {
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "yyyy-MM-dd"
+                    viewModel.loadPhotos(for: formatter.string(from: selectedDate))
+                }
+            }
         }
     }
 }
