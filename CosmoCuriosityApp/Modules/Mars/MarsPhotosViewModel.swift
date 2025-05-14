@@ -13,6 +13,8 @@ import Foundation
 class MarsPhotosViewModel: ObservableObject {
     /// The loaded Mars Rover photos.
     @Published var photos: [MarsPhoto] = []
+    
+    /// NasaService.
     private let service: NasaServiceProtocol
     
     init(service: NasaServiceProtocol) {

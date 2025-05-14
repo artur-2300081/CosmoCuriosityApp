@@ -18,7 +18,7 @@ struct MainTabView: View {
             .tabItem {
                 Label(String(localized: "tab_mars"), systemImage: "circle.fill")
             }
-            EPICView()
+            EPICView(viewModel: EPICViewModel(service: NasaService()))
             .tabItem {
                 Label(String(localized: "tab_earth"), systemImage: "globe.americas")
             }

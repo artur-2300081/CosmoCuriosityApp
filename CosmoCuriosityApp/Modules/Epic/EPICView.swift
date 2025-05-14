@@ -8,15 +8,49 @@
 import SwiftUI
 
 struct EPICView: View {
+    @StateObject private var viewModel: EPICViewModel
+    
+    init(viewModel: EPICViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
+
     var body: some View {
         NavigationView {
             ScrollView {
                 LazyVStack(spacing: 16) {
-                    
+                    ForEach(viewModel.images) { image in
+                        VStack(alignment: .leading, spacing: 12) {
+                            NavigationLink(destination: EPICDetailView(image: image)) {
+                                VStack(alignment: .leading, spacing: 8) {
+                                    // add image
+                                    
+                                    Text(image.caption)
+                                        .font(.subheadline)
+
+                                    Text("Date: \(image.date)")
+                                        .font(.caption)
+                                        .foregroundColor(.gray)
+                                }
+                            }
+                            .buttonStyle(PlainButtonStyle())
+
+                            // add actions button
+                            
+                            Divider()
+                        }
+                        .padding()
+                        .background(Color(.systemBackground))
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                        .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
+                        .padding(.horizontal)
+                    }
                 }
                 .padding(.top)
             }
             .navigationTitle("Earth View")
+            .onAppear {
+                viewModel.loadImages()
+            }
         }
     }
 }
