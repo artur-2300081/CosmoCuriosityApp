@@ -8,15 +8,75 @@
 import SwiftUI
 
 struct ImageSearchView: View {
+    @StateObject private var viewModel: ImageSearchViewModel
+    @State private var query = ""
+    
+    init(viewModel: ImageSearchViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
+    
     var body: some View {
         NavigationView {
-            ScrollView {
-                LazyVStack(spacing: 16) {
+            VStack(spacing: 0) {
+                HStack {
+                    TextField("Search NASA images...", text: $query, onCommit: {
+                        viewModel.search(query)
+                    })
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding(.horizontal)
                     
+                    if viewModel.isLoading {
+                        ProgressView()
+                            .padding(.trailing)
+                    }
                 }
-                .padding(.top)
+                .padding(.vertical, 10)
+                .background(Color(UIColor.systemBackground))
+                .zIndex(1)
+                
+                if viewModel.results.isEmpty && !query.isEmpty {
+                    Text("No results found.")
+                        .padding()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    ScrollView {
+                        LazyVStack(spacing: 16) {
+                            ForEach(viewModel.results) { item in
+                                VStack(alignment: .leading, spacing: 12) {
+                                    NavigationLink(destination: ImageSearchDetailView(item: item)) {
+                                        VStack(alignment: .leading, spacing: 8) {
+                                            // add image
+                                            
+                                            Text(item.title)
+                                                .font(.headline)
+                                            
+                                            if let desc = item.description {
+                                                Text(desc)
+                                                    .font(.caption)
+                                                    .lineLimit(2)
+                                                    .foregroundColor(.secondary)
+                                            }
+                                        }
+                                    }
+                                    .buttonStyle(PlainButtonStyle())
+                                    
+                                    // add action buttons
+                                    
+                                    Divider()
+                                }
+                                .padding()
+                                .background(Color(.systemBackground))
+                                .clipShape(RoundedRectangle(cornerRadius: 16))
+                                .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
+                                .padding(.horizontal)
+                            }
+                        }
+                        .padding()
+                    }
+                }
             }
             .navigationTitle("NASA Search")
         }
     }
 }
+

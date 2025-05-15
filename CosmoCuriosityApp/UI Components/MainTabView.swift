@@ -22,7 +22,7 @@ struct MainTabView: View {
             .tabItem {
                 Label(String(localized: "tab_earth"), systemImage: "globe.americas")
             }
-            ImageSearchView()
+            ImageSearchView(viewModel: ImageSearchViewModel(service: NasaService()))
             .tabItem {
                 Label(String(localized: "tab_search"), systemImage: "magnifyingglass")
             }
