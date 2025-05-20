@@ -13,7 +13,8 @@ struct APODDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                // add image view
+                AsyncImageView(url: URL(string: apod.url))
+                
                 // add action buttons
                 Text(apod.title)
                     .font(.title2)

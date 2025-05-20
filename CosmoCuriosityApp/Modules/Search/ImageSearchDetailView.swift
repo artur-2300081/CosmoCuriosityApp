@@ -13,7 +13,7 @@ struct ImageSearchDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                // add image
+                AsyncImageView(url: URL(string: item.fullImageURL))
                 
                 Text(item.title)
                     .font(.title2)

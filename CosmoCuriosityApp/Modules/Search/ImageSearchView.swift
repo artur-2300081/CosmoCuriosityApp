@@ -45,7 +45,7 @@ struct ImageSearchView: View {
                                 VStack(alignment: .leading, spacing: 12) {
                                     NavigationLink(destination: ImageSearchDetailView(item: item)) {
                                         VStack(alignment: .leading, spacing: 8) {
-                                            // add image
+                                            AsyncImageView(url: URL(string: item.thumbnailURL))
                                             
                                             Text(item.title)
                                                 .font(.headline)

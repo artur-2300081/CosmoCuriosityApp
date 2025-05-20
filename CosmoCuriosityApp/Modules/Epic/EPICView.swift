@@ -22,7 +22,7 @@ struct EPICView: View {
                         VStack(alignment: .leading, spacing: 12) {
                             NavigationLink(destination: EPICDetailView(image: image)) {
                                 VStack(alignment: .leading, spacing: 8) {
-                                    // add image
+                                    AsyncImageView(url: URL(string: image.imageURL))
                                     
                                     Text(image.caption)
                                         .font(.subheadline)

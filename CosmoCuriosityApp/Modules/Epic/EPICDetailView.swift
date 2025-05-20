@@ -13,7 +13,7 @@ struct EPICDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                // add image
+                AsyncImageView(url: URL(string: image.imageURL))
                 
                 Text(image.caption)
                     .font(.title2)

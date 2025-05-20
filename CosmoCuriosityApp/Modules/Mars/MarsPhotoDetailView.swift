@@ -13,7 +13,7 @@ struct MarsPhotoDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                // add image
+                AsyncImageView(url: URL(string: photo.imgSrc))
                 
                 Text("Camera: \(photo.camera.fullName)")
                     .font(.headline)

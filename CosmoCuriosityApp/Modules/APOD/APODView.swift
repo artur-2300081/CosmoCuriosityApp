@@ -24,7 +24,7 @@ struct APODView: View {
                         VStack(alignment: .leading, spacing: 12) {
                             NavigationLink(destination: APODDetailView(apod: apod)) {
                                 VStack(alignment: .leading, spacing: 8) {
-                                    // add image view
+                                    AsyncImageView(url: URL(string: apod.url))
 
                                     Text(apod.title)
                                         .font(.headline)

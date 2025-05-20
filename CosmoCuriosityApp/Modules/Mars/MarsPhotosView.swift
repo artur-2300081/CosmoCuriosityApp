@@ -37,7 +37,7 @@ struct MarsPhotosView: View {
                                 VStack(alignment: .leading, spacing: 12) {
                                     NavigationLink(destination: MarsPhotoDetailView(photo: photo)) {
                                         VStack(alignment: .leading, spacing: 8) {
-                                            // add image view
+                                            AsyncImageView(url: URL(string: photo.imgSrc))
 
                                             Text("Camera: \(photo.camera.fullName)")
                                                 .font(.subheadline)
