@@ -35,6 +35,14 @@ struct MainTabView: View {
                 .tabItem {
                     Label(String(localized: "tab_search"), systemImage: "magnifyingglass")
                 }
+            FavoritesView()
+                .environmentObject(apodFavorites)
+                .environmentObject(marsFavorites)
+                .environmentObject(searchFavorites)
+                .environmentObject(epicFavorites)
+                .tabItem {
+                    Label(String(localized: "tab_favorites"), systemImage: "star.fill")
+                }
         }
     }
 }
