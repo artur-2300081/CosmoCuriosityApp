@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ImageSearchDetailView: View {
+    @EnvironmentObject var searchFavorites: ImageSearchFavorites
     let item: NasaImage
 
     var body: some View {
@@ -22,8 +23,15 @@ struct ImageSearchDetailView: View {
                     Text(desc)
                         .font(.body)
                 }
+                
+                Divider()
 
-               // add action buttons
+                ActionButtonsView(
+                    item: item,
+                    isFavorite: searchFavorites.isFavorite,
+                    toggleFavorite: searchFavorites.toggle,
+                    share: { _ in SharingHelper.share(url: URL(string: item.thumbnailURL)!) }
+                )
             }
             .padding()
         }

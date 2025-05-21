@@ -9,6 +9,7 @@ import SwiftUI
 
 struct APODView: View {
     @StateObject private var viewModel: APODViewModel
+    @EnvironmentObject var apodFavorites: APODFavorites
 
     init(viewModel: APODViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -36,10 +37,15 @@ struct APODView: View {
                                 }
                             }
                             .buttonStyle(PlainButtonStyle())
-
-                            // add action buttons
-
+                            
                             Divider()
+
+                            ActionButtonsView(
+                                item: apod,
+                                isFavorite: apodFavorites.isFavorite,
+                                toggleFavorite: apodFavorites.toggle,
+                                share: { _ in SharingHelper.share(url: URL(string: apod.url)!) }
+                            )
                         }
                         .cardViewStyle()
 

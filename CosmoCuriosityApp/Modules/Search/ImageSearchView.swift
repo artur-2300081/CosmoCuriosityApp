@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ImageSearchView: View {
+    @EnvironmentObject var searchFavorites: ImageSearchFavorites
     @StateObject private var viewModel: ImageSearchViewModel
     @State private var query = ""
     
@@ -60,13 +61,19 @@ struct ImageSearchView: View {
                                     }
                                     .buttonStyle(PlainButtonStyle())
                                     
-                                    // add action buttons
-                                    
                                     Divider()
+                                    
+                                    ActionButtonsView(
+                                        item: item,
+                                        isFavorite: searchFavorites.isFavorite,
+                                        toggleFavorite: searchFavorites.toggle,
+                                        share: { _ in SharingHelper.share(url: URL(string: item.thumbnailURL)!) }
+                                    )                                    
                                 }
                                 .cardViewStyle()
                             }
                         }
+                        .padding(.top)
                     }
                 }
             }

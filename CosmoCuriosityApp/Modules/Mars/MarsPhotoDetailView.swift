@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MarsPhotoDetailView: View {
+    @EnvironmentObject var marsFavorites: MarsFavorites
     let photo: MarsPhoto
 
     var body: some View {
@@ -25,8 +26,15 @@ struct MarsPhotoDetailView: View {
                 Text("Date: \(photo.earthDate)")
                     .font(.caption)
                     .foregroundColor(.gray)
+                
+                Divider()
 
-               // add actions buttons
+                ActionButtonsView(
+                    item: photo,
+                    isFavorite: marsFavorites.isFavorite,
+                    toggleFavorite: marsFavorites.toggle,
+                    share: { _ in SharingHelper.share(url: URL(string: photo.imgSrc)!) }
+                )
             }
             .padding()
         }

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct APODDetailView: View {
+    @EnvironmentObject var apodFavorites: APODFavorites
     let apod: APOD
 
     var body: some View {
@@ -15,12 +16,20 @@ struct APODDetailView: View {
             VStack(alignment: .leading, spacing: 16) {
                 AsyncImageView(url: URL(string: apod.url))
                 
-                // add action buttons
                 Text(apod.title)
                     .font(.title2)
 
                 Text(apod.explanation)
                     .font(.body)
+                
+                Divider()
+                
+                ActionButtonsView(
+                    item: apod,
+                    isFavorite: apodFavorites.isFavorite,
+                    toggleFavorite: apodFavorites.toggle,
+                    share: { _ in SharingHelper.share(url: URL(string: apod.url)!) }
+                )
             }
             .padding()
         }

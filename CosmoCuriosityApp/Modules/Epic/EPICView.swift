@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct EPICView: View {
+    @EnvironmentObject var epicFavorites: EPICFavorites
     @StateObject private var viewModel: EPICViewModel
     
     init(viewModel: EPICViewModel) {
@@ -33,10 +34,15 @@ struct EPICView: View {
                                 }
                             }
                             .buttonStyle(PlainButtonStyle())
-
-                            // add actions button
                             
                             Divider()
+
+                            ActionButtonsView(
+                                item: image,
+                                isFavorite: epicFavorites.isFavorite,
+                                toggleFavorite: epicFavorites.toggle,
+                                share: { _ in SharingHelper.share(url: URL(string: image.imageURL)!) }
+                            )
                         }
                         .cardViewStyle()
                     }

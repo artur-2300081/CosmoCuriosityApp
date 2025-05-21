@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct EPICDetailView: View {
+    @EnvironmentObject var epicFavorites: EPICFavorites
     let image: EPICImage
 
     var body: some View {
@@ -21,8 +22,15 @@ struct EPICDetailView: View {
                 Text("Date: \(image.date)")
                     .font(.caption)
                     .foregroundColor(.gray)
+                
+                Divider()
 
-                // add action buttons
+                ActionButtonsView(
+                    item: image,
+                    isFavorite: epicFavorites.isFavorite,
+                    toggleFavorite: epicFavorites.toggle,
+                    share: { _ in SharingHelper.share(url: URL(string: image.imageURL)!) }
+                )
             }
             .padding()
         }

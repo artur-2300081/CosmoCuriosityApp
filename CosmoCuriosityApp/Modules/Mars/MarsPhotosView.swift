@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MarsPhotosView: View {
+    @EnvironmentObject var marsFavorites: MarsFavorites
     @StateObject private var viewModel: MarsPhotosViewModel
     @State private var selectedDate = Date()
     
@@ -45,14 +46,20 @@ struct MarsPhotosView: View {
                                         }
                                     }
                                     .buttonStyle(PlainButtonStyle())
-
-                                    // add actions buttons
                                     
                                     Divider()
+
+                                    ActionButtonsView(
+                                        item: photo,
+                                        isFavorite: marsFavorites.isFavorite,
+                                        toggleFavorite: marsFavorites.toggle,
+                                        share: { _ in SharingHelper.share(url: URL(string: photo.imgSrc)!) }
+                                    )                                    
                                 }
+                                .cardViewStyle()
                             }
                         }
-                        .cardViewStyle()
+                        .padding(.top)
                     }
                 }
             }
