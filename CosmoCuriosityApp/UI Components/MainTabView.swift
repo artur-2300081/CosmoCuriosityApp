@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+/// The root tab bar navigation view of the application.
+/// Displays main sections: APOD, Mars, EPIC, Image Search, and Favorites.
 struct MainTabView: View {
     let apodFavorites: APODFavorites
     let marsFavorites: MarsFavorites

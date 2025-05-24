@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+/// A reusable view that displays favorite and share action buttons.
+/// - Parameters:
+///   - item: The data model to associate with the actions.
+///   - isFavorite: A closure that returns whether the item is currently a favorite.
+///   - toggleFavorite: A closure to toggle the item's favorite state.
+///   - share: A closure to invoke the share action.
 struct ActionButtonsView<T: Identifiable & Equatable>: View {
     let item: T
     let isFavorite: (T) -> Bool
