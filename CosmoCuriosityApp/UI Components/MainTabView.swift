@@ -10,6 +10,7 @@ import SwiftUI
 /// The root tab bar navigation view of the application.
 /// Displays main sections: APOD, Mars, EPIC, Image Search, and Favorites.
 struct MainTabView: View {
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
     let apodFavorites: APODFavorites
     let marsFavorites: MarsFavorites
     let searchFavorites: ImageSearchFavorites
@@ -20,22 +21,22 @@ struct MainTabView: View {
             APODView(viewModel: APODViewModel(service: NasaService()))
                 .environmentObject(apodFavorites)
                 .tabItem {
-                    Label(String(localized: "tab_home"), systemImage: "house")
+                    Label(String(localized: "Home"), systemImage: "photo.stack")
                 }
             MarsPhotosView(viewModel: MarsPhotosViewModel(service: NasaService()))
                 .environmentObject(marsFavorites)
                 .tabItem {
-                    Label(String(localized: "tab_mars"), systemImage: "circle.fill")
+                    Label(String(localized: "Mars"), systemImage: "m.circle")
                 }
             EPICView(viewModel: EPICViewModel(service: NasaService()))
                 .environmentObject(epicFavorites)
                 .tabItem {
-                    Label(String(localized: "tab_earth"), systemImage: "globe.americas")
+                    Label(String(localized: "Earth"), systemImage: "globe.americas")
                 }
             ImageSearchView(viewModel: ImageSearchViewModel(service: NasaService()))
                 .environmentObject(searchFavorites)
                 .tabItem {
-                    Label(String(localized: "tab_search"), systemImage: "magnifyingglass")
+                    Label(String(localized: "Search"), systemImage: "magnifyingglass")
                 }
             FavoritesView()
                 .environmentObject(apodFavorites)
@@ -43,9 +44,10 @@ struct MainTabView: View {
                 .environmentObject(searchFavorites)
                 .environmentObject(epicFavorites)
                 .tabItem {
-                    Label(String(localized: "tab_favorites"), systemImage: "star.fill")
+                    Label(String(localized: "Favorites"), systemImage: "star.fill")
                 }
         }
+        .accentColor(colorScheme == .light ? Color.black : Color.white)
     }
 }
 
