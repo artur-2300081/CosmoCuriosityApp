@@ -12,3 +12,9 @@ extension View {
         modifier(CardViewStyle())
     }
 }
+
+extension View {
+    func autoDismissSplash(isVisible: Binding<Bool>, after duration: TimeInterval = 2.0) -> some View {
+        modifier(AutoDismissSplashModifier(isVisible: isVisible, duration: duration))
+    }
+}

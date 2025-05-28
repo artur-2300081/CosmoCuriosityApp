@@ -13,6 +13,7 @@ struct CosmoCuriosityApp: App {
     @StateObject var marsFavorites = MarsFavorites()
     @StateObject var searchFavorites = ImageSearchFavorites()
     @StateObject var epicFavorites = EPICFavorites()
+    @State private var showSplash = true
     
     var body: some Scene {
         WindowGroup {
@@ -23,6 +24,11 @@ struct CosmoCuriosityApp: App {
                     searchFavorites: searchFavorites,
                     epicFavorites: epicFavorites
                 )
+                
+                if showSplash {
+                    SplashView()
+                        .autoDismissSplash(isVisible: $showSplash)
+                }
             }
         }
     }
