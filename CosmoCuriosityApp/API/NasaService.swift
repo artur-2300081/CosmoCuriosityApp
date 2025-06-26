@@ -8,7 +8,7 @@
 import Foundation
 
 class NasaService: NasaServiceProtocol {
-    private let apiKey = "cN3aqTvVXDJfMYWwjR4gLK0hQXWznsq2dbZcIJrz"
+    private let apiKey = "DEMO_KEY"
 }
 
 // MARK: fetchAPOD
